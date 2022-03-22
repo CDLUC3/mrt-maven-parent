@@ -29,4 +29,51 @@ git submodule add -b master git@github.com:cdluc3/mrt-zoo
 git submodule add -b main git@github.com:cdluc3/cdl-zk-queue
 git submodule add ../mrt-parent-pom/ mrt-parent-pom
 
+agould@uc3-uc3ops01x2-dev:~/git/github/cdluc3/mrt-maven-refactor> git add .
+agould@uc3-uc3ops01x2-dev:~/git/github/cdluc3/mrt-maven-refactor> git commit -m'add submodules'
+[main 66b300c] add submodules
+ 14 files changed, 91 insertions(+)
+ create mode 100644 .gitmodules
+ create mode 160000 cdl-zk-queue
+ create mode 160000 mrt-audit
+ create mode 160000 mrt-cloud
+ create mode 160000 mrt-core2
+ create mode 160000 mrt-ingest
+ create mode 160000 mrt-inventory
+ create mode 160000 mrt-oai
+ create mode 160000 mrt-parent-pom
+ create mode 160000 mrt-replic
+ create mode 160000 mrt-store
+ create mode 160000 mrt-sword
+ create mode 160000 mrt-zoo
+ create mode 100644 notes
+
+agould@uc3-uc3ops01x2-dev:~/git/github/cdluc3/mrt-maven-refactor> ll
+total 52
+drwxr-xr-x 2 agould users 6144 Mar 22 13:12 cdl-zk-queue
+drwxr-xr-x 6 agould users 6144 Mar 22 13:09 mrt-audit
+drwxr-xr-x 8 agould users 6144 Mar 22 13:11 mrt-cloud
+drwxr-xr-x 7 agould users 6144 Mar 22 13:06 mrt-core2
+drwxr-xr-x 6 agould users 6144 Mar 22 13:06 mrt-ingest
+drwxr-xr-x 2 agould users 6144 Mar 22 13:07 mrt-inventory
+drwxr-xr-x 5 agould users 6144 Mar 22 13:08 mrt-oai
+drwxr-xr-x 2 agould users 6144 Mar 22 13:28 mrt-parent-pom
+drwxr-xr-x 2 agould users 6144 Mar 22 13:10 mrt-replic
+drwxr-xr-x 2 agould users 6144 Mar 22 13:06 mrt-store
+drwxr-xr-x 5 agould users 6144 Mar 22 13:09 mrt-sword
+drwxr-xr-x 3 agould users 6144 Mar 22 13:12 mrt-zoo
+-rw-r--r-- 1 agould users 1135 Mar 22 13:29 notes
+agould@uc3-uc3ops01x2-dev:~/git/github/cdluc3/mrt-maven-refactor> git submodule 
+ 49b65bf96b566cfc458bddc852844eed0d598985 cdl-zk-queue (sprint-67-main)
+ 132353dfd4a4c80971269b5dc84acf496896530a mrt-audit (sprint-67-main)
+ d4c668d6176192c28fc12906a854c331ffaadf6e mrt-cloud (sprint-67)
+ b251a85d01b50237cdd68bd2aac38569b16a31ff mrt-core2 (sprint-67-main)
+ 6d8bd3bf49849cc502447bdbef0229f673b858eb mrt-ingest (sprint-67-main-2-g6d8bd3b)
+ 0274f6e1963d7a28f3865ce501828002f2e3168d mrt-inventory (sprint-67-1-g0274f6e)
+ b0b601c7e3ccb187c7273e9a0def396aaf74c323 mrt-oai (sprint-67)
+ 613db62c86993f88c8c691ef8506579521056a29 mrt-parent-pom (heads/main)
+ b9870f7984c6af20e857259ddf3036a3eaa2d146 mrt-replic (sprint-67)
+ 8a924e6fc1b59bdc13aa40aca438c05a62eedfe4 mrt-store (sprint-67)
+ 2d1a521ae02571f4bde85701411f09c781a69a9a mrt-sword (sprint-67)
+ dc430176853925ccb0e2b9c6b28933d6013e9e54 mrt-zoo (sprint-67)
 

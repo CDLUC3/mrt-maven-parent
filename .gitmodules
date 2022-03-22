@@ -1,11 +1,11 @@
 [submodule "mrt-core2"]
 	path = mrt-core2
 	url = git@github.com:cdluc3/mrt-core2
-	branch = main
+	branch = maven-refactor
 [submodule "mrt-ingest"]
 	path = mrt-ingest
 	url = git@github.com:cdluc3/mrt-ingest
-	branch = main
+	branch = maven-refactor
 [submodule "mrt-inventory"]
 	path = mrt-inventory
 	url = git@github.com:cdluc3/mrt-inventory
@@ -45,3 +45,4 @@
 [submodule "mrt-parent-pom"]
 	path = mrt-parent-pom
 	url = ../mrt-parent-pom/
+	branch = maven-refactor
