@@ -1,0 +1,32 @@
+Tue Mar 22 13:23:25 PDT 2022
+
+git init mrt-parent-pom
+cd mrt-parent-pom/
+git config --global init.defaultBranch main
+git branch -m main
+vi .gitignore
+git add .
+git commit -m'initial commit'
+
+cd ..
+git init mrt-maven-refactor
+cd mrt-maven-refactor
+vi .gitignore
+git add .
+git commit -m'initial commit'
+
+git submodule add -b main git@github.com:cdluc3/mrt-core2 mrt-core2
+git submodule add -b main git@github.com:cdluc3/mrt-ingest mrt-ingest
+git submodule add -b master git@github.com:cdluc3/mrt-inventory mrt-inventory
+git submodule add -b master git@github.com:cdluc3/mrt-oai mrt-oai
+git submodule add -b master git@github.com:cdluc3/mrt-store mrt-store
+git submodule add -b master git@github.com:cdluc3/mrt-sword mrt-sword
+git submodule add -b main git@github.com:cdluc3/mrt-audit
+git submodule add -b main git@github.com:cdluc3/mrt-replic
+git submodule add -b master git@github.com:cdluc3/mrt-replic
+git submodule add -b master git@github.com:cdluc3/mrt-cloud
+git submodule add -b master git@github.com:cdluc3/mrt-zoo
+git submodule add -b main git@github.com:cdluc3/cdl-zk-queue
+git submodule add ../mrt-parent-pom/ mrt-parent-pom
+
+
