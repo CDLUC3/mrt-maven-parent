@@ -1,6 +1,30 @@
+[submodule "mrt-parent-pom"]
+	path = mrt-parent-pom
+	url = ../mrt-parent-pom/
+	branch = maven-refactor
 [submodule "mrt-core2"]
 	path = mrt-core2
 	url = git@github.com:cdluc3/mrt-core2
+	branch = maven-refactor
+[submodule "mrt-cloud"]
+	path = mrt-cloud
+	url = git@github.com:cdluc3/mrt-cloud
+	branch = maven-refactor
+[submodule "mrt-zoo"]
+	path = mrt-zoo
+	url = git@github.com:cdluc3/mrt-zoo
+	branch = maven-refactor
+[submodule "cdl-zk-queue"]
+	path = cdl-zk-queue
+	url = git@github.com:cdluc3/cdl-zk-queue
+	branch = maven-refactor
+[submodule "mrt-conf-prv"]
+	path = mrt-conf-prv
+	url = git@github.com:cdlib/mrt-conf-prv
+	branch = master
+[submodule "mrt-audit"]
+	path = mrt-audit
+	url = git@github.com:cdluc3/mrt-audit
 	branch = maven-refactor
 [submodule "mrt-ingest"]
 	path = mrt-ingest
@@ -13,36 +37,16 @@
 [submodule "mrt-oai"]
 	path = mrt-oai
 	url = git@github.com:cdluc3/mrt-oai
-	branch = master
-[submodule "mrt-store"]
-	path = mrt-store
-	url = git@github.com:cdluc3/mrt-store
-	branch = master
-[submodule "mrt-sword"]
-	path = mrt-sword
-	url = git@github.com:cdluc3/mrt-sword
-	branch = master
-[submodule "mrt-audit"]
-	path = mrt-audit
-	url = git@github.com:cdluc3/mrt-audit
-	branch = main
+	branch = maven-refactor
 [submodule "mrt-replic"]
 	path = mrt-replic
 	url = git@github.com:cdluc3/mrt-replic
-	branch = master
-[submodule "mrt-cloud"]
-	path = mrt-cloud
-	url = git@github.com:cdluc3/mrt-cloud
 	branch = maven-refactor
-[submodule "mrt-zoo"]
-	path = mrt-zoo
-	url = git@github.com:cdluc3/mrt-zoo
+[submodule "mrt-store"]
+	path = mrt-store
+	url = git@github.com:cdluc3/mrt-store
 	branch = maven-refactor
-[submodule "cdl-zk-queue"]
-	path = cdl-zk-queue
-	url = git@github.com:cdluc3/cdl-zk-queue
-	branch = main
-[submodule "mrt-parent-pom"]
-	path = mrt-parent-pom
-	url = ../mrt-parent-pom/
+[submodule "mrt-sword"]
+	path = mrt-sword
+	url = git@github.com:cdluc3/mrt-sword
 	branch = maven-refactor

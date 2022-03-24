@@ -1,4 +1,41 @@
+----------------------------
 Tue Mar 22 13:23:25 PDT 2022
+
+ToDo
+----
+
+- reformat all poms for readability
+- analyze dependencies
+- rename moved dependencies
+- drop all declared but unused dependencies
+- declare all used but undeclared dependencies
+- drop obsolete configs
+  - moved war files (are these used for testing?)
+  - ant configs
+- setup up configs in parent pom
+  - properties:
+    - project.build.sourceEncoding
+    - java.compliler
+  - plugin repositories
+  - repositories
+  - build maven-compiler-plugin.compiler set to java.compiler
+  - manageDependencies declare all common dependencies and versions
+- make all poms declare parent pom
+- drop all declarations of inherritted configs
+- analyze dependencies for security warnings
+- update all dependencies to recent versions
+
+
+ToDo long range
+---------------
+
+- think about wholistic approach to reporting 
+- come up with unified artifact naming system - VERY DISRUPTIVE
+
+
+
+Setup
+-----
 
 git init mrt-parent-pom
 cd mrt-parent-pom/
@@ -86,6 +123,7 @@ dependency:analyze
 ==================
 
 mrt-core2
+---------
 
 mrt-core2/pom.xml:
 Module core-util-init is obsolete.  It calls ant to do basic mvn clean actions.
@@ -114,40 +152,24 @@ Module core-util-init is obsolete.  It calls ant to do basic mvn clean actions.
 [WARNING]    com.amazonaws:aws-java-sdk:jar:1.11.438:compile
 [WARNING]    com.fasterxml.jackson.core:jackson-core:jar:2.9.7:compile
 
----
 
 
-mrt-ingest/ingest-src
+cdl-zk-queue
+------------
 
-[INFO] --- maven-dependency-plugin:2.1:analyze (default-cli) @ mrt-ingestsrc ---
+sets property merritt-core.version but never uses it.
+
+skips tests by default
+
+[INFO] --- maven-dependency-plugin:2.1:analyze (default-cli) @ cdl-zk-queue ---
 [WARNING] Used undeclared dependencies found:
 [WARNING]    org.cdlib.mrt:mrt-jena:jar:2.0-SNAPSHOT:compile
 [WARNING]    org.apache.zookeeper:zookeeper-jute:jar:3.5.5:compile
-[WARNING]    javax.xml.bind:jaxb-api:jar:2.3.1:compile
-[WARNING]    org.cdlib.mrt:mrt-json:jar:2.0-SNAPSHOT:compile
-[WARNING]    org.apache.ant:ant:jar:1.9.4:compile
-[WARNING]    xerces:xmlParserAPIs:jar:2.6.2:compile
-[WARNING]    com.sun.jersey:jersey-core:jar:1.18:compile
-[WARNING]    javax.activation:javax.activation-api:jar:1.2.0:compile
-[WARNING]    stax:stax-api:jar:1.0.1:compile
-[WARNING] Unused declared dependencies found:
-[WARNING]    org.jdom:jdom:jar:1.1:compile
-[WARNING]    jaxen:jaxen:jar:1.1.1:compile
-[WARNING]    org.jibx:jibx-run:jar:1.2.3:compile
-[WARNING]    jmimemagic:jmimemagic:jar:0.1.2:compile
-[WARNING]    javax.ws.rs:jsr311-api:jar:1.1.1:compile
-[WARNING]    commons-codec:commons-codec:jar:1.9:compile
-[WARNING]    com.hp.hpl.jena:jena:jar:2.6.4:compile
-[WARNING]    log4j:log4j:jar:1.2.17:compile
-[WARNING]    junit:junit:jar:4.13.1:test
-[WARNING]    xalan:xalan:jar:2.7.1:compile
-[WARNING]    asm:asm:jar:3.1:compile
-[WARNING]    net.sf.saxon:Saxon-HE:jar:9.8.0-14:compile
-[WARNING]    com.amazonaws:aws-java-sdk:jar:1.11.438:compile
-[WARNING]    joda-time:joda-time:jar:2.8.1:compile
 
 
----
+
+mrt-zoo
+-------
 
 mrt-zoo/zoo-client-source
 [INFO] --- maven-dependency-plugin:2.1:analyze (default-cli) @ mrt-zoopub-src ---
@@ -172,9 +194,10 @@ zoo-client-src/pom.xml:  <artifactId>mrt-zoopub-src</artifactId>
 In fact there is no good reason for zoo-client-src to be build as a module. This should
 be a one level project.
 
----
+
 
 mrt-cloud
+---------
 
 [INFO] --- maven-dependency-plugin:2.1:analyze (default-cli) @ mrt-s3srcpub ---
 [WARNING] Used undeclared dependencies found:
@@ -208,6 +231,328 @@ mrt-cloud
 [WARNING] The artifact ant:ant:jar:1.7.0 has been relocated to org.apache.ant:ant:jar:1.7.0
 [WARNING] The artifact jdom:jdom:jar:1.1 has been relocated to org.jdom:jdom:jar:1.1
 
----
 
+
+mrt-audit
+---------
+
+pom.xml
+- sets active profile which sets unused property 'confModule'
+- declares dependency on javax.ws.rs.jsr311-api, but has no sources to compile
+
+audit-war/pom.xml
+- copy war to war/audit-war/
+
+[INFO] --- maven-dependency-plugin:2.1:analyze (default-cli) @ mrt-auditsrcpub ---
+[WARNING] Used undeclared dependencies found:
+[WARNING]    org.cdlib.mrt:mrt-json:jar:2.0-SNAPSHOT:compile
+[WARNING]    org.glassfish.jersey.core:jersey-server:jar:2.25.1:compile
+[WARNING]    javax.ws.rs:javax.ws.rs-api:jar:2.0.1:compile
+[WARNING]    org.cdlib.mrt:mrt-tools:jar:2.0-SNAPSHOT:compile
+[WARNING] Unused declared dependencies found:
+[WARNING]    org.cdlib.mrt:mrt-cloudconf:jar:1.0-SNAPSHOT:compile
+[WARNING]    org.cdlib.mrt:mrt-auditconfpub:jar:1.0-SNAPSHOT:compile
+[WARNING]    com.amazonaws:aws-java-sdk:jar:1.11.438:compile
+[WARNING]    com.fasterxml.jackson.core:jackson-core:jar:2.9.7:compile
+[WARNING]    mysql:mysql-connector-java:jar:8.0.18:compile
+[WARNING]    org.glassfish.jersey.containers:jersey-container-servlet:jar:2.25.1:compile
+[WARNING]    org.glassfish.jersey.core:jersey-client:jar:2.25.1:compile
+
+[INFO] >>> maven-dependency-plugin:2.1:analyze (default-cli) @ mrt-auditwarpub >>>
+[WARNING] The artifact ant:ant:jar:1.7.0 has been relocated to org.apache.ant:ant:jar:1.7.0
+[WARNING] The artifact jdom:jdom:jar:1.1 has been relocated to org.jdom:jdom:jar:1.1
+
+[INFO] --- maven-dependency-plugin:2.1:analyze (default-cli) @ mrt-auditwarpub ---
+[WARNING] Unused declared dependencies found:
+[WARNING]    org.cdlib.mrt:mrt-auditsrcpub:jar:1.0-SNAPSHOT:compile
+[WARNING]    org.cdlib.mrt:mrt-auditconfpub:jar:1.0-SNAPSHOT:compile
+[WARNING]    org.cdlib.mrt:mrt-cloudconf:jar:1.0-SNAPSHOT:compile
+[WARNING]    org.cdlib.mrt:mrt-s3srcpub:jar:1.0-SNAPSHOT:compile
+[WARNING]    ant:ant:jar:1.7.0:compile
+[WARNING]    com.google.guava:guava:jar:31.0.1-jre:compile
+[WARNING]    com.jolbox:bonecp:jar:0.7.1-rc3:compile
+[WARNING]    commons-codec:commons-codec:jar:1.3:compile
+[WARNING]    commons-logging:commons-logging:jar:1.1.1:compile
+[WARNING]    log4j:log4j:jar:1.2.17:compile
+[WARNING]    javax.servlet:servlet-api:jar:2.5:compile
+[WARNING]    jaxen:jaxen:jar:1.1.1:compile
+[WARNING]    jdom:jdom:jar:1.1:compile
+[WARNING]    org.apache.james:apache-mime4j:jar:0.6:compile
+[WARNING]    org.apache.tika:tika-core:jar:1.22:compile
+[WARNING]    xerces:xercesImpl:jar:2.12.2:compile
+[WARNING]    xml-apis:xml-apis:jar:1.4.01:compile
+
+
+
+mrt-ingest
+----------
+
+mrt-ingest/ingest-src
+
+[INFO] --- maven-dependency-plugin:2.1:analyze (default-cli) @ mrt-ingestsrc ---
+[WARNING] Used undeclared dependencies found:
+[WARNING]    org.cdlib.mrt:mrt-jena:jar:2.0-SNAPSHOT:compile
+[WARNING]    org.apache.zookeeper:zookeeper-jute:jar:3.5.5:compile
+[WARNING]    javax.xml.bind:jaxb-api:jar:2.3.1:compile
+[WARNING]    org.cdlib.mrt:mrt-json:jar:2.0-SNAPSHOT:compile
+[WARNING]    org.apache.ant:ant:jar:1.9.4:compile
+[WARNING]    xerces:xmlParserAPIs:jar:2.6.2:compile
+[WARNING]    com.sun.jersey:jersey-core:jar:1.18:compile
+[WARNING]    javax.activation:javax.activation-api:jar:1.2.0:compile
+[WARNING]    stax:stax-api:jar:1.0.1:compile
+[WARNING] Unused declared dependencies found:
+[WARNING]    org.jdom:jdom:jar:1.1:compile
+[WARNING]    jaxen:jaxen:jar:1.1.1:compile
+[WARNING]    org.jibx:jibx-run:jar:1.2.3:compile
+[WARNING]    jmimemagic:jmimemagic:jar:0.1.2:compile
+[WARNING]    javax.ws.rs:jsr311-api:jar:1.1.1:compile
+[WARNING]    commons-codec:commons-codec:jar:1.9:compile
+[WARNING]    com.hp.hpl.jena:jena:jar:2.6.4:compile
+[WARNING]    log4j:log4j:jar:1.2.17:compile
+[WARNING]    junit:junit:jar:4.13.1:test
+[WARNING]    xalan:xalan:jar:2.7.1:compile
+[WARNING]    asm:asm:jar:3.1:compile
+[WARNING]    net.sf.saxon:Saxon-HE:jar:9.8.0-14:compile
+[WARNING]    com.amazonaws:aws-java-sdk:jar:1.11.438:compile
+[WARNING]    joda-time:joda-time:jar:2.8.1:compile
+
+
+mrt-inventory
+-------------
+
+inv-war/pom.xml copies war artifact to inv-war/war/ but we never use it.
+
+[INFO] --- maven-dependency-plugin:2.1:analyze (default-cli) @ mrt-inventorysrc ---
+[WARNING] Used undeclared dependencies found:
+[WARNING]    org.apache.httpcomponents:httpcore:jar:4.4.1:compile
+[WARNING]    org.glassfish.jersey.core:jersey-server:jar:2.25.1:compile
+[WARNING]    javax.ws.rs:javax.ws.rs-api:jar:2.0.1:compile
+[WARNING]    org.cdlib.mrt:mrt-json:jar:2.0-SNAPSHOT:compile
+[WARNING] Unused declared dependencies found:
+[WARNING]    org.cdlib.mrt:mrt-cloudconf:jar:1.0-SNAPSHOT:compile
+[WARNING]    org.cdlib.mrt:mrt-inventoryconf:jar:1.0-SNAPSHOT:compile
+[WARNING]    org.cdlib.mrt:mrt-jena:jar:2.0-SNAPSHOT:compile
+[WARNING]    com.jolbox:bonecp:jar:0.8.0.RELEASE:compile
+[WARNING]    log4j:log4j:jar:1.2.16:compile
+[WARNING]    mysql:mysql-connector-java:jar:5.1.38:compile
+[WARNING]    org.glassfish.jersey.containers:jersey-container-servlet:jar:2.25.1:compile
+[WARNING]    org.glassfish.jersey.core:jersey-client:jar:2.25.1:compile
+[WARNING]    xerces:xercesImpl:jar:2.11.0:compile
+
+[INFO] <<< maven-dependency-plugin:2.1:analyze (default-cli) @ mrt-invwar <<<
+[WARNING] The artifact ant:ant:jar:1.7.0 has been relocated to org.apache.ant:ant:jar:1.7.0
+[WARNING] The artifact jdom:jdom:jar:1.1 has been relocated to org.jdom:jdom:jar:1.1
+
+[INFO] --- maven-dependency-plugin:2.1:analyze (default-cli) @ mrt-invwar ---
+[WARNING] Unused declared dependencies found:
+[WARNING]    org.cdlib.mrt:mrt-inventoryconf:jar:1.0-SNAPSHOT:compile
+[WARNING]    org.cdlib.mrt:mrt-inventorysrc:jar:1.0-SNAPSHOT:compile
+[WARNING]    org.cdlib.mrt:cdl-zk-queue:jar:0.2-SNAPSHOT:compile
+[WARNING]    ant:ant:jar:1.7.0:compile
+[WARNING]    commons-codec:commons-codec:jar:1.3:compile
+[WARNING]    commons-logging:commons-logging:jar:1.1.1:compile
+[WARNING]    com.google.guava:guava:jar:12.0:compile
+[WARNING]    com.hp.hpl.jena:jena:jar:2.6.4:compile
+[WARNING]    com.jolbox:bonecp:jar:0.7.1-rc3:compile
+[WARNING]    javax.servlet:servlet-api:jar:2.5:compile
+[WARNING]    jaxen:jaxen:jar:1.1.1:compile
+[WARNING]    jdom:jdom:jar:1.1:compile
+[WARNING]    log4j:log4j:jar:1.2.16:compile
+[WARNING]    mysql:mysql-connector-java:jar:5.1.13:compile
+[WARNING]    org.apache.james:apache-mime4j:jar:0.6:compile
+[WARNING]    org.apache.tika:tika-core:jar:1.17:compile
+[WARNING]    org.apache.zookeeper:zookeeper:jar:3.3.3:compile
+[WARNING]    xerces:xercesImpl:jar:2.11.0:compile
+[WARNING]    xml-apis:xml-apis:jar:1.4.01:compile
+
+
+mrt-oai
+-------
+
+oai-war/pom.xml
+- copies war to `war/test`
+- dependency on com.lyncode.xoai-data-provider is set twice
+- wont compile: cant find jars:
+  - com.lyncode:xoai-data-provider:jar:4.1.1-SNAPSHOT
+  - com.lyncode:xoai-common:jar:4.1.1-SNAPSHOT
+  - org.cdlib.mrt:mrt-confmysql:jar:test-1.0-SNAPSHOT
+
+I got this to build by including project git@github.com:cdlib/mrt-conf-prv, and by
+adding repo to poms oai-src/pom.xml oai-war/pom.xml:
+
+  <repositories>
+    <repository>
+      <id>cdl-snapshots</id>
+      <url>https://mvn.cdlib.org/content/repositories/cdl-snapshots</url>
+    </repository>
+  </repositories>
+
+[INFO] --- maven-dependency-plugin:2.1:analyze (default-cli) @ mrt-oaisrcpub ---
+[WARNING] Used undeclared dependencies found:
+[WARNING]    org.glassfish.jersey.core:jersey-server:jar:2.25.1:compile
+[WARNING]    com.lyncode:xml-io:jar:1.0.3:compile
+[WARNING]    com.google.guava:guava:jar:r07:compile
+[WARNING]    org.hamcrest:hamcrest-core:jar:1.3:test
+[WARNING]    javax.ws.rs:javax.ws.rs-api:jar:2.0.1:compile
+[WARNING]    com.lyncode:builder-commons:jar:1.0.2:compile
+[WARNING]    xml-apis:xml-apis:jar:1.4.01:compile
+[WARNING]    org.apache.commons:commons-lang3:jar:3.1:compile
+[WARNING] Unused declared dependencies found:
+[WARNING]    org.cdlib.mrt:mrt-confmysql:jar:test-1.0-SNAPSHOT:compile
+[WARNING]    org.cdlib.mrt:mrt-oaiconfpub:jar:1.0-SNAPSHOT:compile
+[WARNING]    com.jolbox:bonecp:jar:0.7.1-rc3:compile
+[WARNING]    javax.mail:mail:jar:1.4.1:compile
+[WARNING]    log4j:log4j:jar:1.2.16:compile
+[WARNING]    mysql:mysql-connector-java:jar:5.1.13:compile
+[WARNING]    org.glassfish.jersey.containers:jersey-container-servlet:jar:2.25.1:compile
+[WARNING]    org.glassfish.jersey.media:jersey-media-multipart:jar:2.25.1:compile
+[WARNING]    org.glassfish.jersey.core:jersey-client:jar:2.25.1:compile
+[WARNING]    org.hamcrest:hamcrest-all:jar:1.3:compile
+[WARNING]    org.apache.tika:tika-app:jar:1.2:compile
+
+[INFO] --- maven-dependency-plugin:2.1:analyze (default-cli) @ mrt-oaiwar ---
+[WARNING] Unused declared dependencies found:
+[WARNING]    org.cdlib.mrt:mrt-confmysql:jar:test-1.0-SNAPSHOT:compile
+[WARNING]    org.cdlib.mrt:mrt-core:jar:2.0-SNAPSHOT:compile
+[WARNING]    org.cdlib.mrt:mrt-inventorysrc:jar:1.0-SNAPSHOT:compile
+[WARNING]    org.cdlib.mrt:mrt-oaiconfpub:jar:1.0-SNAPSHOT:compile
+[WARNING]    org.cdlib.mrt:mrt-oaisrcpub:jar:1.0-SNAPSHOT:compile
+[WARNING]    com.jolbox:bonecp:jar:0.7.1-rc3:compile
+[WARNING]    com.lyncode:xoai-common:jar:4.1.1-SNAPSHOT:compile
+[WARNING]    com.lyncode:xoai-data-provider:jar:4.1.1-SNAPSHOT:compile
+[WARNING]    javax.mail:mail:jar:1.4.1:compile
+[WARNING]    javax.servlet:servlet-api:jar:2.5:provided
+[WARNING]    junit:junit:jar:4.11:test
+[WARNING]    log4j:log4j:jar:1.2.16:compile
+[WARNING]    mysql:mysql-connector-java:jar:5.1.13:compile
+[WARNING]    org.glassfish.jersey.containers:jersey-container-servlet:jar:2.25.1:compile
+[WARNING]    org.glassfish.jersey.media:jersey-media-multipart:jar:2.25.1:compile
+[WARNING]    org.glassfish.jersey.core:jersey-client:jar:2.25.1:compile
+[WARNING]    org.hamcrest:hamcrest-all:jar:1.3:compile
+[WARNING]    org.apache.tika:tika-app:jar:1.2:compile
+
+
+
+mrt-replic
+----------
+
+replication-src/pom.xml contains repository section pointing to https://mvn.cdlib.org/content/repositories.  I've commented it out for now to be consisent with other projects.
+
+[INFO] --- maven-dependency-plugin:2.1:analyze (default-cli) @ mrt-replicationsrc ---
+[WARNING] Used undeclared dependencies found:
+[WARNING]    org.cdlib.mrt:mrt-json:jar:2.0-SNAPSHOT:compile
+[WARNING]    org.apache.httpcomponents:httpcore:jar:4.4.1:compile
+[WARNING]    org.glassfish.jersey.core:jersey-server:jar:2.25.1:compile
+[WARNING]    com.amazonaws:aws-java-sdk-s3:jar:1.11.545:compile
+[WARNING]    javax.ws.rs:javax.ws.rs-api:jar:2.0.1:compile
+[WARNING]    org.cdlib.mrt:mrt-tools:jar:2.0-SNAPSHOT:compile
+[WARNING] Unused declared dependencies found:
+[WARNING]    org.cdlib.mrt:mrt-cloudconf:jar:1.0-SNAPSHOT:compile
+[WARNING]    org.cdlib.mrt:mrt-replicationconf:jar:1.0-SNAPSHOT:compile
+[WARNING]    com.amazonaws:aws-java-sdk:jar:1.11.545:compile
+[WARNING]    com.fasterxml.jackson.core:jackson-core:jar:2.9.7:compile
+[WARNING]    junit:junit:jar:4.5:test
+[WARNING]    mysql:mysql-connector-java:jar:5.1.49:compile
+[WARNING]    org.apache.logging.log4j:log4j-core:jar:2.17.1:compile
+[WARNING]    org.glassfish.jersey.containers:jersey-container-servlet:jar:2.25.1:compile
+[WARNING]    org.glassfish.jersey.media:jersey-media-multipart:jar:2.25.1:compile
+[WARNING]    org.glassfish.jersey.core:jersey-client:jar:2.25.1:compile
+
+[INFO] >>> maven-dependency-plugin:2.1:analyze (default-cli) @ mrt-replicationwar >>>
+[WARNING] The artifact ant:ant:jar:1.7.0 has been relocated to org.apache.ant:ant:jar:1.7.0
+[WARNING] The artifact jdom:jdom:jar:1.1 has been relocated to org.jdom:jdom:jar:1.1
+
+[INFO] --- maven-dependency-plugin:2.1:analyze (default-cli) @ mrt-replicationwar ---
+[WARNING] Unused declared dependencies found:
+[WARNING]    org.cdlib.mrt:mrt-replicationsrc:jar:1.0-SNAPSHOT:compile
+[WARNING]    org.cdlib.mrt:mrt-inventorysrc:jar:1.0-SNAPSHOT:compile
+[WARNING]    org.cdlib.mrt:mrt-replicationconf:jar:1.0-SNAPSHOT:compile
+[WARNING]    org.cdlib.mrt:mrt-s3srcpub:jar:1.0-SNAPSHOT:compile
+[WARNING]    ant:ant:jar:1.7.0:compile
+[WARNING]    com.google.guava:guava:jar:12.0:compile
+[WARNING]    com.jolbox:bonecp:jar:0.7.1-rc3:compile
+[WARNING]    commons-codec:commons-codec:jar:1.3:compile
+[WARNING]    commons-logging:commons-logging:jar:1.1.1:compile
+[WARNING]    jaxen:jaxen:jar:1.1.1:compile
+[WARNING]    javax.servlet:servlet-api:jar:2.5:compile
+[WARNING]    jdom:jdom:jar:1.1:compile
+[WARNING]    org.apache.james:apache-mime4j:jar:0.6:compile
+[WARNING]    mysql:mysql-connector-java:jar:5.1.49:compile
+[WARNING]    org.apache.logging.log4j:log4j-core:jar:2.17.1:compile
+[WARNING]    xerces:xercesImpl:jar:2.11.0:compile
+[WARNING]    xml-apis:xml-apis:jar:1.4.01:compile
+
+
+mrt-store
+---------
+
+[INFO] --- maven-dependency-plugin:2.1:analyze (default-cli) @ mrt-store2pub-src ---
+[WARNING] Used undeclared dependencies found:
+[WARNING]    org.glassfish.jersey.core:jersey-server:jar:2.25.1:compile
+[WARNING]    javax.ws.rs:javax.ws.rs-api:jar:2.0.1:compile
+[WARNING]    org.cdlib.mrt:mrt-json:jar:2.0-SNAPSHOT:compile
+[WARNING]    org.jdom:jdom:jar:1.1:compile
+[WARNING]    org.cdlib.mrt:mrt-tools:jar:2.0-SNAPSHOT:compile
+[WARNING] Unused declared dependencies found:
+[WARNING]    org.cdlib.mrt:mrt-cloudconf:jar:1.0-SNAPSHOT:compile
+[WARNING]    org.cdlib.mrt:mrt-storeconf:jar:1.0-SNAPSHOT:compile
+[WARNING]    jaxen:jaxen:jar:1.1.1:compile
+[WARNING]    log4j:log4j:jar:1.2.12:compile
+[WARNING]    org.glassfish.jersey.containers:jersey-container-servlet:jar:2.25.1:compile
+[WARNING]    org.glassfish.jersey.core:jersey-client:jar:2.25.1:compile
+
+[INFO] --- maven-dependency-plugin:2.1:analyze (default-cli) @ mrt-storewar ---
+[WARNING] Unused declared dependencies found:
+[WARNING]    org.cdlib.mrt:mrt-storeconf:jar:1.0-SNAPSHOT:compile
+[WARNING]    org.cdlib.mrt:mrt-store2pub-src:jar:1.0-SNAPSHOT:compile
+[WARNING]    org.cdlib.mrt:mrt-jena:jar:2.0-SNAPSHOT:compile
+[WARNING]    asm:asm:jar:3.1:compile
+[WARNING]    javax.servlet:servlet-api:jar:2.4:provided
+[WARNING]    org.glassfish.jersey.containers:jersey-container-servlet:jar:2.25.1:compile
+[WARNING]    org.glassfish.jersey.core:jersey-client:jar:2.25.1:compile
+[WARNING]    org.glassfish.jersey.media:jersey-media-multipart:jar:2.25.1:compile
+[WARNING]    org.apache.tika:tika-core:jar:1.20:compile
+[WARNING]    xerces:xercesImpl:jar:2.11.0:compile
+[WARNING]    xml-apis:xml-apis:jar:1.4.01:compile
+
+
+mrt-sword
+---------
+
+[INFO] --- maven-dependency-plugin:2.1:analyze (default-cli) @ mrt-swordsrcpub ---
+[WARNING] Used undeclared dependencies found:
+[WARNING]    commons-codec:commons-codec:jar:1.4:compile
+[WARNING]    org.cdlib.mrt:mrt-jena:jar:2.0-SNAPSHOT:compile
+[WARNING]    org.apache.httpcomponents:httpcore:jar:4.4.1:compile
+[WARNING]    org.apache.abdera:abdera-i18n:jar:1.1.1:compile
+[WARNING]    junit:junit:jar:4.5:compile
+[WARNING]    org.apache.abdera:abdera-core:jar:1.1.1:compile
+[WARNING]    org.apache.httpcomponents:httpclient:jar:4.4.1:compile
+[WARNING]    org.apache.httpcomponents:httpmime:jar:4.4.1:compile
+[WARNING]    javax.servlet:servlet-api:jar:2.5:compile
+[WARNING]    xml-apis:xml-apis:jar:1.4.01:compile
+[WARNING] Unused declared dependencies found:
+[WARNING]    org.cdlib.mrt:mrt-confmysql:jar:test-1.0-SNAPSHOT:compile
+[WARNING]    org.cdlib.mrt:mrt-swordconfpub:jar:1.0-SNAPSHOT:compile
+[WARNING]    com.hp.hpl.jena:jena:jar:2.6.4:compile
+[WARNING]    javax.mail:mail:jar:1.4:compile
+[WARNING]    log4j:log4j:jar:1.2.15:compile
+[WARNING]    org.apache.abdera:abdera-client:jar:1.1.1:compile
+[WARNING]    org.apache.camel:camel-mail:jar:2.16.0:compile
+[WARNING]    org.apache.commons:commons-io:jar:1.3.2:compile
+[WARNING]    org.codehaus.woodstox:wstx-asl:jar:3.2.6:compile
+[WARNING]    org.slf4j:slf4j-api:jar:1.5.8:compile
+
+[INFO] --- maven-dependency-plugin:2.1:analyze (default-cli) @ mrt-swordwarpub ---
+[WARNING] Unused declared dependencies found:
+[WARNING]    org.cdlib.mrt:mrt-confmysql:jar:test-1.0-SNAPSHOT:compile
+[WARNING]    org.cdlib.mrt:mrt-inventorysrc:jar:1.0-SNAPSHOT:compile
+[WARNING]    org.cdlib.mrt:mrt-swordconfpub:jar:1.0-SNAPSHOT:compile
+[WARNING]    org.cdlib.mrt:mrt-swordsrcpub:jar:1.0-SNAPSHOT:compile
+[WARNING]    com.hp.hpl.jena:jena:jar:2.6.4:compile
+[WARNING]    commons-fileupload:commons-fileupload:jar:1.2.1:compile
+[WARNING]    javax.servlet:servlet-api:jar:2.4:compile
+[WARNING]    log4j:log4j:jar:1.2.15:compile
+[WARNING]    org.apache.abdera:abdera-client:jar:1.1.1:compile
+[WARNING]    xom:xom:jar:1.1:compile
 
