@@ -77,3 +77,137 @@ agould@uc3-uc3ops01x2-dev:~/git/github/cdluc3/mrt-maven-refactor> git submodule
  2d1a521ae02571f4bde85701411f09c781a69a9a mrt-sword (sprint-67)
  dc430176853925ccb0e2b9c6b28933d6013e9e54 mrt-zoo (sprint-67)
 
+
+---
+
+
+
+dependency:analyze
+==================
+
+mrt-core2
+
+mrt-core2/pom.xml:
+Module core-util-init is obsolete.  It calls ant to do basic mvn clean actions.
+
+[INFO] --- maven-dependency-plugin:2.1:analyze (default-cli) @ mrt-core ---
+[WARNING] Used undeclared dependencies found:
+[WARNING]    com.hp.hpl.jena:jena:jar:2.6.2:compile
+[WARNING]    xalan:xalan:jar:2.7.0:compile
+[WARNING]    org.jdom:jdom:jar:1.1:compile
+[WARNING] Unused declared dependencies found:
+[WARNING]    org.cdlib.mrt:mrt-json:jar:2.0-SNAPSHOT:compile
+[WARNING]    org.cdlib.mrt:mrt-jena:jar:2.0-SNAPSHOT:compile
+[WARNING]    jdom:jdom:jar:1.1:compile
+[WARNING]    mysql:mysql-connector-java:jar:5.1.13:compile
+[WARNING]    net.sf.saxon:Saxon-HE:jar:9.4:compile
+[WARNING]    org.apache.commons:commons-compress:jar:1.8:compile
+[WARNING]    xerces:xercesImpl:jar:2.11.0:compile
+[WARNING]    jaxen:jaxen:jar:1.1.1:compile
+
+[INFO] --- maven-dependency-plugin:2.1:analyze (default-cli) @ mrt-tools ---
+[WARNING] Used undeclared dependencies found:
+[WARNING]    com.amazonaws:aws-java-sdk-ssm:jar:1.11.438:compile
+[WARNING] Unused declared dependencies found:
+[WARNING]    org.cdlib.mrt:mrt-core:jar:2.0-SNAPSHOT:compile
+[WARNING]    org.cdlib.mrt:mrt-json:jar:2.0-SNAPSHOT:compile
+[WARNING]    com.amazonaws:aws-java-sdk:jar:1.11.438:compile
+[WARNING]    com.fasterxml.jackson.core:jackson-core:jar:2.9.7:compile
+
+---
+
+
+mrt-ingest/ingest-src
+
+[INFO] --- maven-dependency-plugin:2.1:analyze (default-cli) @ mrt-ingestsrc ---
+[WARNING] Used undeclared dependencies found:
+[WARNING]    org.cdlib.mrt:mrt-jena:jar:2.0-SNAPSHOT:compile
+[WARNING]    org.apache.zookeeper:zookeeper-jute:jar:3.5.5:compile
+[WARNING]    javax.xml.bind:jaxb-api:jar:2.3.1:compile
+[WARNING]    org.cdlib.mrt:mrt-json:jar:2.0-SNAPSHOT:compile
+[WARNING]    org.apache.ant:ant:jar:1.9.4:compile
+[WARNING]    xerces:xmlParserAPIs:jar:2.6.2:compile
+[WARNING]    com.sun.jersey:jersey-core:jar:1.18:compile
+[WARNING]    javax.activation:javax.activation-api:jar:1.2.0:compile
+[WARNING]    stax:stax-api:jar:1.0.1:compile
+[WARNING] Unused declared dependencies found:
+[WARNING]    org.jdom:jdom:jar:1.1:compile
+[WARNING]    jaxen:jaxen:jar:1.1.1:compile
+[WARNING]    org.jibx:jibx-run:jar:1.2.3:compile
+[WARNING]    jmimemagic:jmimemagic:jar:0.1.2:compile
+[WARNING]    javax.ws.rs:jsr311-api:jar:1.1.1:compile
+[WARNING]    commons-codec:commons-codec:jar:1.9:compile
+[WARNING]    com.hp.hpl.jena:jena:jar:2.6.4:compile
+[WARNING]    log4j:log4j:jar:1.2.17:compile
+[WARNING]    junit:junit:jar:4.13.1:test
+[WARNING]    xalan:xalan:jar:2.7.1:compile
+[WARNING]    asm:asm:jar:3.1:compile
+[WARNING]    net.sf.saxon:Saxon-HE:jar:9.8.0-14:compile
+[WARNING]    com.amazonaws:aws-java-sdk:jar:1.11.438:compile
+[WARNING]    joda-time:joda-time:jar:2.8.1:compile
+
+
+---
+
+mrt-zoo/zoo-client-source
+[INFO] --- maven-dependency-plugin:2.1:analyze (default-cli) @ mrt-zoopub-src ---
+[WARNING] Unused declared dependencies found:
+[WARNING]    com.jolbox:bonecp:jar:0.7.1-rc3:compile
+[WARNING]    log4j:log4j:jar:1.2.16:compile
+[WARNING]    javax.mail:mail:jar:1.4.1:compile
+[WARNING]    javax.servlet:servlet-api:jar:2.5:compile
+[WARNING]    junit:junit:jar:4.5:test
+[WARNING]    org.apache.httpcomponents:httpclient:jar:4.0:compile
+[WARNING]    org.apache.httpcomponents:httpcore:jar:4.0.1:compile
+[WARNING]    org.apache.httpcomponents:httpmime:jar:4.0:compile
+[WARNING]    org.apache.tika:tika-core:jar:1.17:compile
+[WARNING]    xerces:xercesImpl:jar:2.11.0:compile
+[INFO]                                                                         
+
+Note: terrible artifact naming in this project:
+~/git/github/cdluc3/mrt-zoo/
+pom.xml:  <artifactId>zoo-client</artifactId>
+zoo-client-src/pom.xml:  <artifactId>mrt-zoopub-src</artifactId>
+
+In fact there is no good reason for zoo-client-src to be build as a module. This should
+be a one level project.
+
+---
+
+mrt-cloud
+
+[INFO] --- maven-dependency-plugin:2.1:analyze (default-cli) @ mrt-s3srcpub ---
+[WARNING] Used undeclared dependencies found:
+[WARNING]    org.cdlib.mrt:mrt-json:jar:2.0-SNAPSHOT:compile
+[WARNING]    com.amazonaws:aws-java-sdk-core:jar:1.11.438:compile
+[WARNING]    com.amazonaws:aws-java-sdk-s3:jar:1.11.438:compile
+[WARNING]    org.apache.commons:commons-lang3:jar:3.1:compile
+[WARNING] Unused declared dependencies found:
+[WARNING]    org.cdlib.mrt:mrt-cloudconf:jar:1.0-SNAPSHOT:compile
+[WARNING]    org.cdlib.mrt:mrt-jena:jar:2.0-SNAPSHOT:compile
+[WARNING]    org.cdlib.mrt:mrt-openstackpub:jar:1.0-SNAPSHOT:compile
+[WARNING]    ant:ant:jar:1.7.0:compile
+[WARNING]    com.amazonaws:aws-java-sdk:jar:1.11.438:compile
+[WARNING]    com.fasterxml.jackson.core:jackson-core:jar:2.9.7:compile
+[WARNING]    jdom:jdom:jar:1.1:compile
+[WARNING]    org.apache.httpcomponents:httpclient:jar:4.4.1:compile
+[WARNING]    org.apache.httpcomponents:httpcore:jar:4.4.1:compile
+[WARNING]    org.apache.httpcomponents:httpmime:jar:4.4.1:compile
+[WARNING]    xalan:xalan:jar:2.7.1:compile
+
+[INFO] --- maven-dependency-plugin:2.1:analyze (default-cli) @ mrt-openstackpub ---
+[WARNING] Unused declared dependencies found:
+[WARNING]    org.cdlib.mrt:mrt-jena:jar:2.0-SNAPSHOT:compile
+[WARNING]    ant:ant:jar:1.7.0:compile
+[WARNING]    javax.servlet:servlet-api:jar:2.5:compile
+[WARNING]    jdom:jdom:jar:1.1:compile
+[WARNING]    org.apache.httpcomponents:httpmime:jar:4.4.1:compile
+[WARNING]    xalan:xalan:jar:2.7.1:compile
+
+[INFO] >>> maven-dependency-plugin:2.1:analyze (default-cli) @ mrt-openstackpub >>>
+[WARNING] The artifact ant:ant:jar:1.7.0 has been relocated to org.apache.ant:ant:jar:1.7.0
+[WARNING] The artifact jdom:jdom:jar:1.1 has been relocated to org.jdom:jdom:jar:1.1
+
+---
+
+

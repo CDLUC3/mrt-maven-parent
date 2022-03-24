@@ -9,7 +9,7 @@
 [submodule "mrt-inventory"]
 	path = mrt-inventory
 	url = git@github.com:cdluc3/mrt-inventory
-	branch = master
+	branch = maven-refactor
 [submodule "mrt-oai"]
 	path = mrt-oai
 	url = git@github.com:cdluc3/mrt-oai
@@ -33,11 +33,11 @@
 [submodule "mrt-cloud"]
 	path = mrt-cloud
 	url = git@github.com:cdluc3/mrt-cloud
-	branch = master
+	branch = maven-refactor
 [submodule "mrt-zoo"]
 	path = mrt-zoo
 	url = git@github.com:cdluc3/mrt-zoo
-	branch = master
+	branch = maven-refactor
 [submodule "cdl-zk-queue"]
 	path = cdl-zk-queue
 	url = git@github.com:cdluc3/cdl-zk-queue
