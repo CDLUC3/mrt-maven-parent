@@ -1,7 +1,3 @@
-[submodule "mrt-parent-pom"]
-	path = mrt-parent-pom
-	url = ../mrt-parent-pom/
-	branch = maven-refactor
 [submodule "mrt-core2"]
 	path = mrt-core2
 	url = git@github.com:cdluc3/mrt-core2

@@ -117,6 +117,62 @@ agould@uc3-uc3ops01x2-dev:~/git/github/cdluc3/mrt-maven-refactor> git submodule
 
 ---
 
+I later dropped mrt-parent-pom completely:
+
+  agould@uc3-uc3ops01x2-dev:~/git/github/cdluc3/mrt-maven-parent> ll mrt-parent-pom/
+  total 12
+  -rw-r--r-- 1 agould users 6864 Mar 22 13:46 effective-pom.xml
+  -rw-r--r-- 1 agould users  881 Mar 24 15:44 pom.xml
+  agould@uc3-uc3ops01x2-dev:~/git/github/cdluc3/mrt-maven-parent> git submodule status mrt-parent-pom/
+   4d7d62d019b8368e7104f0d7f09d360813dd11f1 mrt-parent-pom (heads/maven-refactor)
+
+
+
+1) git submodule deinit -f mrt-parent-pom/
+
+This removes entry in .git/config and all files under path mrt-parent-pom, but
+leaves everything in modules/mrt-parent-pom and the entry in .gitmodules.
+
+  agould@uc3-uc3ops01x2-dev:~/git/github/cdluc3/mrt-maven-parent> git submodule deinit -f mrt-parent-pom/
+  Cleared directory 'mrt-parent-pom'
+  Submodule 'mrt-parent-pom' (../mrt-parent-pom/) unregistered for path 'mrt-parent-pom'
+  agould@uc3-uc3ops01x2-dev:~/git/github/cdluc3/mrt-maven-parent> la mrt-parent-pom/
+  total 8
+  drwxr-xr-x  2 agould users 6144 Mar 24 17:08 .
+  drwxr-xr-x 16 agould users 6144 Mar 24 17:09 ..
+  agould@uc3-uc3ops01x2-dev:~/git/github/cdluc3/mrt-maven-parent> grep mrt-parent-pom .git/config 
+  agould@uc3-uc3ops01x2-dev:~/git/github/cdluc3/mrt-maven-parent> ll .git/modules/mrt-parent-pom/
+  total 52
+  drwxr-xr-x  2 agould users 6144 Mar 22 13:28 branches
+  -rw-r--r--  1 agould users  227 Mar 24 17:05 COMMIT_EDITMSG
+  -rw-r--r--  1 agould users  266 Mar 24 17:08 config
+  -rw-r--r--  1 agould users   73 Mar 22 13:28 description
+  -rw-r--r--  1 agould users  246 Mar 22 14:13 FETCH_HEAD
+  -rw-r--r--  1 agould users   31 Mar 22 13:35 HEAD
+  drwxr-xr-x  2 agould users 6144 Mar 22 13:28 hooks
+  -rw-r--r--  1 agould users  297 Mar 24 17:05 index
+  drwxr-xr-x  2 agould users 6144 Mar 22 13:28 info
+  drwxr-xr-x  3 agould users 6144 Mar 22 13:28 logs
+  drwxr-xr-x 14 agould users 6144 Mar 24 17:05 objects
+  -rw-r--r--  1 agould users  112 Mar 22 13:28 packed-refs
+  drwxr-xr-x  5 agould users 6144 Mar 22 13:28 refs
+
+
+2) git rm -f mrt-parent-pom
+
+This deletes the empty directory and removes entry in .gitmodules.
+
+  agould@uc3-uc3ops01x2-dev:~/git/github/cdluc3/mrt-maven-parent> git rm -f mrt-parent-pom
+  rm 'mrt-parent-pom'
+
+3) rm -rf .git/modules/mrt-parent-pom/
+
+(optional) remove repo from .git/modules by hand.
+  agould@uc3-uc3ops01x2-dev:~/git/github/cdluc3/mrt-maven-parent> rm -rf .git/modules/mrt-parent-pom/
+
+
+
+
 
 
 dependency:analyze
