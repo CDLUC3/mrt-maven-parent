@@ -13,11 +13,11 @@
 
   <!-- short cut to build pre-reqs -->
   <modules>
-    <module>../mrt-core2</module>
-    <module>../mrt-cloud</module>
-    <module>../mrt-zoo</module>
-    <module>../cdl-zk-queue</module>
-    <module>../mrt-conf-prv</module>
+    <module>mrt-core2</module>
+    <module>mrt-cloud</module>
+    <module>mrt-zoo</module>
+    <module>cdl-zk-queue</module>
+    <module>mrt-conf-prv</module>
   </modules>
 
 </project>

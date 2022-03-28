@@ -208,6 +208,35 @@ Module core-util-init is obsolete.  It calls ant to do basic mvn clean actions.
 [WARNING]    com.amazonaws:aws-java-sdk:jar:1.11.438:compile
 [WARNING]    com.fasterxml.jackson.core:jackson-core:jar:2.9.7:compile
 
+Notes:
+tests fail if dependencies are simply in alphabetical order:
+
+Failed tests:   testDataCite2DC_2_2(org.cdlib.mrt.core.DataCiteDC2Test): TestIT exception:org.cdlib.mrt.utility.XSLTUtil-xslConvert:170 GENERAL_EXCEPTION[Unexpected Programmic exception] javax.xml.transform.TransformerConfigurationException: javax.xml.transform.TransformerConfigurationException: javax.xml.transform.TransformerException: org.xml.sax.SAXException: Could not find function: lower-case
+  testDataCite2DC_3(org.cdlib.mrt.core.DataCiteDC2Test): TestIT exception:org.cdlib.mrt.utility.XSLTUtil-xslConvert:170 GENERAL_EXCEPTION[Unexpected Programmic exception] javax.xml.transform.TransformerConfigurationException: javax.xml.transform.TransformerConfigurationException: javax.xml.transform.TransformerException: org.xml.sax.SAXException: Could not find function: lower-case
+  testDataCite2DC_2_2(org.cdlib.mrt.core.DataCiteDCTest): TestIT exception:org.cdlib.mrt.utility.XSLTUtil-xslConvert:170 GENERAL_EXCEPTION[Unexpected Programmic exception] javax.xml.transform.TransformerConfigurationException: javax.xml.transform.TransformerConfigurationException: javax.xml.transform.TransformerException: org.xml.sax.SAXException: Could not find function: lower-case
+  testDataCite2DC_3(org.cdlib.mrt.core.DataCiteDCTest): TestIT exception:org.cdlib.mrt.utility.XSLTUtil-xslConvert:170 GENERAL_EXCEPTION[Unexpected Programmic exception] javax.xml.transform.TransformerConfigurationException: javax.xml.transform.TransformerConfigurationException: javax.xml.transform.TransformerException: org.xml.sax.SAXException: Could not find function: lower-case
+
+But I can get all tests to pass if I put jaxen at end of dependency list
+
+Turns out jaxen has transitive dependency for xom at lower version than that
+required by com.sf.saxon.  excluding xom from jaxen dependency declaration fixes the issue.
+
+From mrt-core/core/pom.xml:
+
+    <dependency>
+      <groupId>jaxen</groupId>
+      <artifactId>jaxen</artifactId>
+      <version>1.1.1</version>
+      <!-- tests were failing when jaxen was higher in the dependency list than net.sf.saxon
+           which needs xom:xom:jar:1.2.5 -->
+      <exclusions>
+        <exclusion>
+           <groupId>xom</groupId>
+           <artifactId>xom</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
 
 
 cdl-zk-queue
