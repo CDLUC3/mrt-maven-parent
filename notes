@@ -1,12 +1,13 @@
+
 ----------------------------
-Tue Mar 22 13:23:25 PDT 2022
+Mon Mar 28 16:28:34 PDT 2022
 
 ToDo
 ----
 
-- reformat all poms for readability
-- analyze dependencies
-- rename moved dependencies
+DONE - reformat all poms for readability
+DONE - analyze dependencies
+DONE - rename moved dependencies
 - drop all declared but unused dependencies
 - declare all used but undeclared dependencies
 - drop obsolete configs
@@ -24,6 +25,9 @@ ToDo
 - drop all declarations of inherritted configs
 - analyze dependencies for security warnings
 - update all dependencies to recent versions
+- fix various per-project issues:
+  - mrt-store: drop module store-src
+  - mrt-ingest: drop module ingest-init
 
 
 ToDo long range
@@ -31,6 +35,23 @@ ToDo long range
 
 - think about wholistic approach to reporting 
 - come up with unified artifact naming system - VERY DISRUPTIVE
+
+
+
+Tags explaned
+-------------
+maven-refactor-0.0 reformatted pom files for readability
+   reformat all pom files:
+   - indent to 2 spaces
+   - all dependencies are in alphabetical order
+   - move commented out dependencies to bottom of pom files
+   - changes to content to ensure all projects compile, test, and install from commandline:
+     - mrt-sword/sword-src/pom.xml: add exclusion to dependency def for jaxen
+     - mrt-store, mrt-replic: comment out repositories section to be consistent with all other projects
+     - mrt-oai: add in repositories section to allow retrival of custom built artifacts com.lyncode:xoai-common, com.lyncode:xoai-data-provider (4.1.1-SNAPSHOT)
+
+
+
 
 
 
