@@ -33,9 +33,20 @@ DONE - rename moved dependencies
 ToDo long range
 ---------------
 
-- think about wholistic approach to reporting 
+- think about holistic approach to reporting 
 - come up with unified artifact naming system - VERY DISRUPTIVE
-- depricate mrt-jena as shaded artifact
+- depricate mrt-jena as shaded artifact or drop all together
+- brake up mrt-core/core packages into separate projects (poms) so that maven can 
+  evaluate these as separate dependecies.
+
+  Or cane these be renamed as sub packages of org.cdlib.mrt.core? e.g:
+    package org.cdlib.mrt.core
+    package org.cdlib.mrt.core.cloud
+    package org.cdlib.mrt.core.db
+    package org.cdlib.mrt.core.formatter
+    package org.cdlib.mrt.core.tools (isn't this used already?)
+    package org.cdlib.mrt.core.tools.loader
+    package org.cdlib.mrt.core.utility
 
 
 
@@ -50,6 +61,11 @@ maven-refactor-0.0 reformatted pom files for readability
      - mrt-sword/sword-src/pom.xml: add exclusion to dependency def for jaxen
      - mrt-store, mrt-replic: comment out repositories section to be consistent with all other projects
      - mrt-oai: add in repositories section to allow retrival of custom built artifacts com.lyncode:xoai-common, com.lyncode:xoai-data-provider (4.1.1-SNAPSHOT)
+
+maven-refactor-0.1 explicitly declare used/undeclared deps
+    make updates to dependencies after running `mvn dependency:analyze`
+    - update renamed dependecies e.g. ant:ant -> org.apache.ant:ant
+    - explicitly declare dependencies which are listed as "used but undeclared"
 
 
 
