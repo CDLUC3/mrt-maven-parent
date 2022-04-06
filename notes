@@ -8,11 +8,31 @@ ToDo
 DONE - reformat all poms for readability
 DONE - analyze dependencies
 DONE - rename moved dependencies
-- declare used but undeclared dependencies
-- drop all declared but unused dependencies
+DONE - declare used but undeclared dependencies
+
+- maven-refactor: remove unused/declared deps
+  - PASS mrt-core2
+  - NA cdl-zk-queue
+  - PASS mrt-cloud
+  - PASS mrt-zoo
+  - PASS mrt-audit
+    - ISSUE: do mrt-integ-tests cover audit actions?
+  - PASS mrt-ingest
+
+- add pluggin to check for test coverage
+
+- clean up all warnings
+
 - drop obsolete configs
-  - moved war files (are these used for testing?)
   - ant configs
+  - plugin copies war file to ./war/ (are these used for testing?)
+    - mrt-ingest/ingest-war
+      [INFO] --- maven-dependency-plugin:2.1:copy (copy) @ mrt-ingestwar ---
+      [INFO] Configured Artifact: org.cdlib.mrt:mrt-ingestwar:1.0-SNAPSHOT:war
+      [INFO] Copying mrt-ingestwar-1.0-SNAPSHOT.war to /home/agould/git/github/cdluc3/mrt-maven-parent/mrt-ingest/ingest-war/war/mrtingest.war
+    - mrt-audit/audit-war
+    - mrt-audit/audit-war
+
 - setup up configs in parent pom
   - properties:
     - project.build.sourceEncoding
@@ -28,6 +48,7 @@ DONE - rename moved dependencies
 - fix various per-project issues:
   - mrt-store: drop module store-src
   - mrt-ingest: drop module ingest-init
+  - mrt-zoo: update zookeeper 
 
 
 ToDo long range
@@ -36,7 +57,7 @@ ToDo long range
 - think about holistic approach to reporting 
 - come up with unified artifact naming system - VERY DISRUPTIVE
 - depricate mrt-jena as shaded artifact or drop all together
-- brake up mrt-core/core packages into separate projects (poms) so that maven can 
+- brake up mrt-core2/core packages into separate projects (poms) so that maven can 
   evaluate these as separate dependecies.
 
   Or cane these be renamed as sub packages of org.cdlib.mrt.core? e.g:
@@ -47,6 +68,16 @@ ToDo long range
     package org.cdlib.mrt.core.tools (isn't this used already?)
     package org.cdlib.mrt.core.tools.loader
     package org.cdlib.mrt.core.utility
+
+- mrt-core2/core/ contains junit test code under src/main:
+    [ERROR] /build/mrt-core2/core/src/main/java/org/cdlib/mrt/tools/loader/test/BatchManifestTest.java:[13,17] package org.junit does not exist
+    [ERROR] /build/mrt-core2/core/src/main/java/org/cdlib/mrt/tools/loader/test/BatchLoaderTest.java:[12,17] package org.junit does not exist
+    [ERROR] /build/mrt-core2/core/src/main/java/org/cdlib/mrt/security/CertsLDAP.java:[17,17] package org.junit does not exist
+    [ERROR] /build/mrt-core2/core/src/main/java/org/cdlib/mrt/tools/loader/test/StoreLoaderTest.java:[10,17] package org.junit does not exist
+
+- /mrt-cloud/s3-src: fix deprication warning
+    [WARNING] /home/agould/git/github/cdluc3/mrt-maven-parent/mrt-cloud/s3-src/src/main/java/org/cdlib/mrt/cloud/object/AWSKeysList.java uses or overrides a deprecated API.
+
 
 
 
